@@ -1,20 +1,8 @@
 from pathlib import Path
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# False if not in os.environ because of casting above
-DEBUG = os.getenv('DEBUG')
-
-# Raises Django's ImproperlyConfigured
-# exception if SECRET_KEY not in os.environ
-SECRET_KEY = os.getenv('SECRET_KEY')
-
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +25,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'app4prod.urls'
@@ -58,29 +47,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app4prod.wsgi.application'
-
-
-# Database
-
-DJANGO_ENV = os.getenv('DJANGO_ENV', default='developement')
-
-if DJANGO_ENV == 'developement':
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-    }
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'DBNAME': os.getenv('NAME'),
-        'DBUSER': os.getenv('USER'),
-        'DBPASSWORD': os.getenv('PASSWORD'),
-        'DBHOST': os.getenv('HOST'),
-    }
-}
 
 
 
@@ -119,9 +85,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CSRF_TRUSTED_ORIGINS = ["https://django-on-azure-app-beniac.azurewebsites.net"]

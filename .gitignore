@@ -1,5 +1,6 @@
 
-*settings.env
+app4prod/settings/.env
+app4prod/settings/production.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

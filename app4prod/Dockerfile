@@ -17,6 +17,8 @@ RUN pip3 install -r requirements.txt
 # copy project
 COPY . /app
 
+RUN python manage.py collectstatic --noinput
+
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
