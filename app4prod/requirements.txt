@@ -7,3 +7,5 @@ typing_extensions==4.8.0
 python-dotenv==1.0.0
 psycopg2-binary==2.9.9
 whitenoise==6.6.0
+azure-monitor-opentelemetry==1.1.1
+opentelemetry-instrumentation-logging==0.42b0

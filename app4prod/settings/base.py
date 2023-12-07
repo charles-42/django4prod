@@ -96,4 +96,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CSRF_TRUSTED_ORIGINS = ["https://django-on-azure-app-beniac.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = ["https://*.django-on-azure-app-beniac.azurewebsites.net"]

@@ -4,6 +4,13 @@ from .base import *
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import logging
+from opentelemetry.instrumentation.django import DjangoInstrumentor
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from azure.monitor.opentelemetry.exporter import AzureMonitorTraceExporter
+from opentelemetry import trace
+from opentelemetry.instrumentation.psycopg2 import Psycopg2Instrumentor
 
 load_dotenv()
 
@@ -65,3 +72,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CSRF_TRUSTED_ORIGINS = ["https://django-on-azure-app-beniac.azurewebsites.net"]
+
+# Monitoring
+
+# Configuration de l'exportateur Azure Monitor
+trace_exporter = AzureMonitorTraceExporter(
+    connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+)
+
+# Configuration du Tracer Provider
+trace_provider = TracerProvider()
+trace_provider.add_span_processor(
+    BatchSpanProcessor(trace_exporter)
+)
+
+# Définir le fournisseur de traceur global
+trace.set_tracer_provider(trace_provider)
+
+# Creates a tracer from the global tracer provider
+tracer = trace.get_tracer("my.tracer.name")
+
+if DJANGO_ENV == 'production':
+    Psycopg2Instrumentor().instrument()
+
+logger = logging.getLogger(__name__)
+
+# # # # Instrumentation de Django
+DjangoInstrumentor().instrument() 
