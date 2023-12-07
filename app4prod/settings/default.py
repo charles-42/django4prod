@@ -75,27 +75,30 @@ CSRF_TRUSTED_ORIGINS = ["https://django-on-azure-app-beniac.azurewebsites.net"]
 
 # Monitoring
 
-# Configuration de l'exportateur Azure Monitor
-trace_exporter = AzureMonitorTraceExporter(
-    connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
-)
+MONITORING = os.getenv('MONITORING', default=False)
 
-# Configuration du Tracer Provider
-trace_provider = TracerProvider()
-trace_provider.add_span_processor(
-    BatchSpanProcessor(trace_exporter)
-)
+if MONITORING == True:
+    # Configuration de l'exportateur Azure Monitor
+    trace_exporter = AzureMonitorTraceExporter(
+        connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+    )
 
-# Définir le fournisseur de traceur global
-trace.set_tracer_provider(trace_provider)
+    # Configuration du Tracer Provider
+    trace_provider = TracerProvider()
+    trace_provider.add_span_processor(
+        BatchSpanProcessor(trace_exporter)
+    )
 
-# Creates a tracer from the global tracer provider
-tracer = trace.get_tracer("my.tracer.name")
+    # Définir le fournisseur de traceur global
+    trace.set_tracer_provider(trace_provider)
 
-if DJANGO_ENV == 'production':
-    Psycopg2Instrumentor().instrument()
+    # Creates a tracer from the global tracer provider
+    tracer = trace.get_tracer("my.tracer.name")
 
-logger = logging.getLogger(__name__)
+    if DJANGO_ENV == 'production':
+        Psycopg2Instrumentor().instrument()
 
-# # # # Instrumentation de Django
-DjangoInstrumentor().instrument() 
+    logger = logging.getLogger(__name__)
+
+    # # # # Instrumentation de Django
+    DjangoInstrumentor().instrument() 
