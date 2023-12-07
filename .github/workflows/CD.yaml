@@ -18,8 +18,13 @@
             
             env:
                 SECRET_KEY: 'notsecret'
-                DJANGO_ENV: 'development'
+                DJANGO_ENV: 'production'
                 ALLOWED_HOSTS: '*'
+                NAME: ${{ secrets.DBNAME }}
+                USER: ${{ secrets.DBUSER }}
+                PASSWORD: ${{ secrets.DBPASSWORD }}
+                HOST: ${{ secrets.DBHOST }}
+
             
             steps:
                 - name: Checkout code # checking our the code at current commit that triggers the workflow
@@ -48,8 +53,11 @@
                   run: pycodestyle --statistics --ignore=E501 app4prod
     
                 - name: Run Migrations # run migrations to create table in side car db container
-                  run: python app4prod/manage.py migrate
+                  run: python app4prod/manage.py collectstatic --noinput
     
+                - name: Run Migrations # run migrations to create table in side car db container
+                  run: python app4prod/manage.py migrate
+
                 - name: Run Test and Coverage # running tests
                   working-directory: ./app4prod
                   run: pytest --cov=main --cov-fail-under=95 -vv
