@@ -52,7 +52,7 @@ jobs:
 
             - name: Create test superuser
               run: |
-                python app4prod/manage.py createsuperuser --username testuser --noinput
+                python app4prod/manage.py createsuperuser --username testuser --email testuser@test.com --noinput
 
             - name: Run Test and Coverage # running tests
               working-directory: ./app4prod
