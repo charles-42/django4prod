@@ -7,7 +7,6 @@ on:
     pull_request:
         branches:
         - develop
-        - main
         paths:
         - 'app4prod/**' # Specify the path to the app4prod directory
 

@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "application",
         "monitoring",
-        "CI/CD"
+        "CI/CD",
+        "tests"
     ]
 }
