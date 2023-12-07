@@ -35,8 +35,6 @@ jobs:
         run: pip install -r app4prod/requirements.txt
       - name: Check Syntax # check code formatting
         run: pycodestyle --statistics --ignore=E501 app4prod
-      - name: Run Migrations # run migrations to create table in side car db container
-        run: python app4prod/manage.py migrate
       - name: Run Test and Coverage # running tests
         working-directory: ./app4prod
         run: pytest --cov=main --cov-fail-under=95 -vv
