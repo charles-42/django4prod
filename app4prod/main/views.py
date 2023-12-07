@@ -7,9 +7,11 @@ from opentelemetry import trace
 
 load_dotenv()
 
+
 def index(request):
     # Start a new span with the name "hello"
     return render(request, 'index.html')
+
 
 @login_required
 def hello(request):

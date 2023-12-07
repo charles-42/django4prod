@@ -49,8 +49,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app4prod.wsgi.application'
 
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -96,4 +94,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CSRF_TRUSTED_ORIGINS = ["https://*.django-on-azure-app-beniac.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.django-on-azure-app-beniac.azurewebsites.net"]

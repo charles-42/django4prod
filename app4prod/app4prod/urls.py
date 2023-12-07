@@ -6,7 +6,9 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index,name="index"),
-    path("accounts/", include("django.contrib.auth.urls")), # intègre l'authentification
-    path('accounts/profile/', views.hello,name="hello"), # redicrection après la page login
+    path('', views.index, name="index"),
+    # intègre l'authentification
+    path("accounts/", include("django.contrib.auth.urls")),
+    # redicrection après la page login
+    path('accounts/profile/', views.hello, name="hello"),
 ]
