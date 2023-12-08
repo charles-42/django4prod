@@ -93,7 +93,7 @@
                     tags: ${{ secrets.ACR }}.azurecr.io/django4prod:test 
 
                 - name: Test
-                  run: |
+                  run: >
                     docker run --rm -d --name myct -e HOST=${{ secrets.DBHOST }} -e PASSWORD=${{ secrets.DBPASSWORD }} -e USER=${{ secrets.DBUSER }} -e NAME=${{ secrets.DBNAME }} -e SECRET_KEY='notsecret' -e DJANGO_ENV='production' -e ALLOWED_HOSTS='*' ${{ secrets.ACR }}.azurecr.io/django4prod:test
                     docker exec myct pytest
                     docker stop myct
