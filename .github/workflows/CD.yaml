@@ -76,36 +76,42 @@
                     password: ${{ secrets.ACR_PASSWORD }}
                   
                       
-                - name: Build and Push to Azure Container Registry
+                # - name: Build and Export
+                #   uses: docker/build-push-action@v2
+                #   with:
+                #     context: app4prod
+                #     file: app4prod/Dockerfile
+                #     push: true
+                #     tags: ${{ secrets.ACR }}.azurecr.io/django4prod:latest 
+        
+                - name: Build and Export
+                  uses: docker/build-push-action@v2
+                  with:
+                    context: app4prod
+                    file: app4prod/Dockerfile
+                    load: true
+                    tags: ${{ secrets.ACR }}.azurecr.io/django4prod:test 
+
+                - name: Test
+                  run: |
+                      docker run --rm ${{ env.TEST_TAG }}
+                      -e YOUR_ENV_VARIABLE=${{ secrets.YOUR_ENV_VARIABLE }} \
+                      -e SECRET_KEY='notsecret' \
+                      -e DJANGO_ENV='production' \
+                      -e ALLOWED_HOSTS='*' \
+                      -e NAME=${{ secrets.DBNAME }} \
+                      -e USER=${{ secrets.DBUSER }} \
+                      -e PASSWORD=${{ secrets.DBPASSWORD }} \
+                      -e HOST=${{ secrets.DBHOST }} \
+                      ${{ secrets.ACR }}.azurecr.io/django4prod:test 
+
+                - name: Build and Export
                   uses: docker/build-push-action@v2
                   with:
                     context: app4prod
                     file: app4prod/Dockerfile
                     push: true
                     tags: ${{ secrets.ACR }}.azurecr.io/django4prod:latest 
-        
-                - name: Start Docker container
-                  run: |
-                      docker run \
-                      --name my_container \
-                      -e YOUR_ENV_VARIABLE=${{ secrets.YOUR_ENV_VARIABLE }} \
-                      -e SECRET_KEY='notsecret' \
-                      -e DJANGO_ENV='production' \
-                      -e ALLOWED_HOSTS='*' \
-                      -e NAME=${{ secrets.DBNAME }} \
-                      -e USER: ${{ secrets.DBUSER }} \
-                      -e PASSWORD: ${{ secrets.DBPASSWORD }} \
-                      -e HOST: ${{ secrets.DBHOST }} \
-                      ${{ secrets.ACR }}.azurecr.io/django4prod:latest 
-                      sleep 5
-                
-                - name: Run pytest inside Docker container
-                  run: |
-                        docker exec my_container pytest
-                        # You may need to customize the container name
-                
-                - name: Stop Docker container
-                  run: docker stop my_container      
 
                 - name: Login to Azure CLI
                   uses: azure/login@v1
