@@ -94,17 +94,17 @@
 
                 - name: Test
                   run: >
-                    docker run --rm -d \
-                    -e HOST=${{ secrets.DBHOST }} \
-                    -e PASSWORD=${{ secrets.DBPASSWORD }} \
-                    -e USER=${{ secrets.DBUSER }} \
-                    -e NAME=${{ secrets.DBNAME }} \
-                    -e SECRET_KEY='notsecret' \
-                    -e DJANGO_ENV='production' \
-                    -e ALLOWED_HOSTS='*' \
-                    --name myct ${{ secrets.ACR }}.azurecr.io/django4prod:test && \
-                    sleep 10 && \
-                    docker exec myct pytest && \
+                    docker run --rm -d 
+                    -e HOST=${{ secrets.DBHOST }} 
+                    -e PASSWORD=${{ secrets.DBPASSWORD }} 
+                    -e USER=${{ secrets.DBUSER }} 
+                    -e NAME=${{ secrets.DBNAME }} 
+                    -e SECRET_KEY='notsecret' 
+                    -e DJANGO_ENV='production' 
+                    -e ALLOWED_HOSTS='*' 
+                    --name myct ${{ secrets.ACR }}.azurecr.io/django4prod:test && 
+                    sleep 10 && 
+                    docker exec myct pytest && 
                     docker stop myct
             # docker run --rm -d --name myct ${{ secrets.ACR }}.azurecr.io/django4prod:test
             #   -e SECRET_KEY='notsecret' \
