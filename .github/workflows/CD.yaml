@@ -75,46 +75,6 @@
                     username: ${{ secrets.ACR_USERNAME }}
                     password: ${{ secrets.ACR_PASSWORD }}
                   
-                      
-                # - name: Build and Export
-                #   uses: docker/build-push-action@v2
-                #   with:
-                #     context: app4prod
-                #     file: app4prod/Dockerfile
-                #     push: true
-                #     tags: ${{ secrets.ACR }}.azurecr.io/django4prod:latest 
-        
-                - name: Build and Export
-                  uses: docker/build-push-action@v2
-                  with:
-                    context: app4prod
-                    file: app4prod/Dockerfile
-                    load: true
-                    tags: ${{ secrets.ACR }}.azurecr.io/django4prod:test 
-
-                - name: Test
-                  run: >
-                    docker run --rm -d 
-                    -e HOST=${{ secrets.DBHOST }} 
-                    -e PASSWORD=${{ secrets.DBPASSWORD }} 
-                    -e USER=${{ secrets.DBUSER }} 
-                    -e NAME=${{ secrets.DBNAME }} 
-                    -e SECRET_KEY='notsecret' 
-                    -e DJANGO_ENV='production' 
-                    -e ALLOWED_HOSTS='*' 
-                    --name myct ${{ secrets.ACR }}.azurecr.io/django4prod:test && 
-                    sleep 10 && 
-                    docker exec myct pytest && 
-                    docker stop myct
-            # docker run --rm -d --name myct ${{ secrets.ACR }}.azurecr.io/django4prod:test
-            #   -e SECRET_KEY='notsecret' \
-            #   -e DJANGO_ENV='production' \
-            #    \
-            #   -e NAME=${{ secrets.DBNAME }} \
-            #   -e USER=${{ secrets.DBUSER }} \
-            #   -e PASSWORD=${{ secrets.DBPASSWORD }} \
-            #   -e HOST=${{ secrets.DBHOST }} \
-            #   ${{ secrets.ACR }}.azurecr.io/django4prod:test 
 
                 - name: Build and Export
                   uses: docker/build-push-action@v2
