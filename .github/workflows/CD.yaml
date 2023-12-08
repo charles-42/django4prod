@@ -84,11 +84,7 @@
                     push: true
                     tags: djangoacrbeniac.azurecr.io/django4prod:latest 
         
-        deploy:
-            runs-on: ubuntu-latest
 
-            steps:
-                      
                 - name: Login to Azure CLI
                   uses: azure/login@v1
                   with:
