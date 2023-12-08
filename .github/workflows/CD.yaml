@@ -86,7 +86,7 @@
         
                 - name: Start Docker container
                   run: |
-                      docker -d run \
+                      docker run \
                       --name my_container \
                       -e YOUR_ENV_VARIABLE=${{ secrets.YOUR_ENV_VARIABLE }} \
                       -e SECRET_KEY='notsecret' \
