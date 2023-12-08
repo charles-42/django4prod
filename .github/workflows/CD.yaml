@@ -79,8 +79,8 @@
                 - name: Build and Push to Azure Container Registry
                   uses: docker/build-push-action@v2
                   with:
-                    context: .
-                    file: app4prod/Dockerfile
+                    context: app4prod
+                    file: ./Dockerfile
                     push: true
                     tags: djangoacrbeniac.azurecr.io/django4prod:latest 
         
