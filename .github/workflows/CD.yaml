@@ -86,16 +86,16 @@
         
                 - name: Start Docker container
                   run: |
-                      docker -d run |
-                      --name my_container |
-                      -e YOUR_ENV_VARIABLE=${{ secrets.YOUR_ENV_VARIABLE }}  |
-                      -e SECRET_KEY='notsecret' |
-                      -e DJANGO_ENV='production' |
-                      -e ALLOWED_HOSTS='*' |
-                      -e NAME=${{ secrets.DBNAME }} |
-                      -e USER: ${{ secrets.DBUSER }} |
-                      -e PASSWORD: ${{ secrets.DBPASSWORD }} |
-                      -e HOST: ${{ secrets.DBHOST }} |
+                      docker -d run \
+                      --name my_container \
+                      -e YOUR_ENV_VARIABLE=${{ secrets.YOUR_ENV_VARIABLE }} \
+                      -e SECRET_KEY='notsecret' \
+                      -e DJANGO_ENV='production' \
+                      -e ALLOWED_HOSTS='*' \
+                      -e NAME=${{ secrets.DBNAME }} \
+                      -e USER: ${{ secrets.DBUSER }} \
+                      -e PASSWORD: ${{ secrets.DBPASSWORD }} \
+                      -e HOST: ${{ secrets.DBHOST }} \
                       ${{ secrets.ACR }}.azurecr.io/django4prod:latest 
                       sleep 5
                 
