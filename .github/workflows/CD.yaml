@@ -71,7 +71,7 @@
                 - name: Login to Azure Container Registry
                   uses: azure/docker-login@v1
                   with:
-                    login-server: djangoacrbeniac.azurecr.io
+                    login-server: ${{ secrets.ACR }}.azurecr.io
                     username: ${{ secrets.ACR_USERNAME }}
                     password: ${{ secrets.ACR_PASSWORD }}
                   
@@ -82,7 +82,7 @@
                     context: app4prod
                     file: app4prod/Dockerfile
                     push: true
-                    tags: djangoacrbeniac.azurecr.io/django4prod:latest 
+                    tags: ${{ secrets.ACR }}.azurecr.io/django4prod:latest 
         
 
                 - name: Login to Azure CLI
@@ -92,4 +92,4 @@
 
                 - name: Redémarrer Azure App Service
                   run: |
-                    az webapp restart --name django-on-azure-app-beniac --resource-group azure-django-gunicorn-dockerRG
+                    az webapp restart --name ${{ secrets.APP }} --resource-group ${{ secrets.RG }}
