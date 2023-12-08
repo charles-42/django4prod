@@ -80,7 +80,7 @@
                   uses: docker/build-push-action@v2
                   with:
                     context: app4prod
-                    file: ./Dockerfile
+                    file: app4prod/Dockerfile
                     push: true
                     tags: djangoacrbeniac.azurecr.io/django4prod:latest 
         
