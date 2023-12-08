@@ -1,3 +1,10 @@
+
+app4prod/settings/.env
+app4prod/settings/production.py
+app4prod/static
+
+app4prod/azure.env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
