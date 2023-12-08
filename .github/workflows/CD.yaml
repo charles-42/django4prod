@@ -94,7 +94,7 @@
 
                 - name: Test
                   run: |
-                      docker run --rm ${{ env.TEST_TAG }}
+                      docker run --rm \
                       -e YOUR_ENV_VARIABLE=${{ secrets.YOUR_ENV_VARIABLE }} \
                       -e SECRET_KEY='notsecret' \
                       -e DJANGO_ENV='production' \
